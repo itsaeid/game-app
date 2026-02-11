@@ -10,14 +10,7 @@ export default function GamesPage() {
 
   return (
     <div>
-      {data?.results?.map((game: any) => (
-        <div key={game.id} className="flex w-full">
-          <h3>{game.name}</h3>
-          <div className="w-2 h-5 bg-black"></div>
-          <span>{game.rating}</span>
-          <img src={game.background_image} alt="" className="w-50" />
-        </div>
-      ))}
+     اتاباتتاتا
     </div>
   )
 }
