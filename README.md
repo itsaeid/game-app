@@ -1,36 +1,129 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎮 Mini Game Store – RAWG API (Next.js)
 
-## Getting Started
+A mini e-commerce style game store built with **Next.js (App Router)**, powered by the **RAWG Video Games Database API**.  
+This project demonstrates clean API architecture, filtering, pagination, dynamic routing, and modern UI development using shadcn/ui and Tailwind CSS.
 
-First, run the development server:
+---
+
+## 🚀 Tech Stack
+
+- **Next.js (App Router)**
+- **TypeScript**
+- **Tailwind CSS**
+- **shadcn/ui**
+- **Axios**
+- **SWR**
+- **RAWG API**
+
+---
+
+## 📦 Features
+
+### ✅ Game Listing
+- Fetch games from RAWG API
+- Search functionality
+- Ordering (rating, release date)
+- Dynamic filtering via URL search params
+- Pagination with shadcn UI
+
+### ✅ Game Details Page
+- Dynamic route: `/games/[id]`
+- Game information:
+  - Name
+  - Description (HTML rendered safely)
+  - Rating
+  - Release date
+  - Platforms
+  - Genres
+- Screenshots gallery (`/games/{id}/screenshots`)
+- Community reactions display
+
+### ✅ Pagination
+- Page-based navigation
+- URL-driven state
+- Fully integrated with SWR
+- Refetch on page change
+- Smooth scroll to top on page switch
+
+---
+
+
+---
+
+## 🔑 Environment Variables
+
+Create a `.env.local` file in the root:
+
+NEXT_PUBLIC_RAWG_BASE_URL=https://api.rawg.io/api
+NEXT_PUBLIC_RAWG_API_KEY=your_api_key_here
+
+
+
+> You must obtain an API key from RAWG and include it in requests.
+
+---
+
+## 🔌 API Architecture
+
+### Axios Instance
+
+`lib/api.ts`
+
+- Centralized base URL
+- Reusable axios instance
+
+### Fetch Layer
+
+`lib/game.ts`
+
+- `getGames(query)`
+- `getGameById(id)`
+- `getGameScreenshots(id)`
+
+All data fetching logic is separated from UI components.
+
+---
+
+## 🔎 Filtering Architecture
+
+Filtering is managed using:
+
+- `useSearchParams`
+- `useRouter`
+- Custom hook: `useProductFilter`
+
+State is synchronized with URL parameters:
+
+- `search`
+- `ordering`
+- `page`
+
+This ensures:
+- Shareable URLs
+- Back/forward navigation support
+- Automatic SWR refetch on change
+
+---
+
+## 🔄 Pagination Flow
+
+1. `page` is stored in URL
+2. `useProductFilter` reads it
+3. SWR key changes when page changes
+4. Data refetches automatically
+5. `totalPages = Math.ceil(count / page_size)`
+
+---
+
+## 🛠 Installation
 
 ```bash
+git clone <repo-url>
+cd project-name
+npm install
+
+## Run development server
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
